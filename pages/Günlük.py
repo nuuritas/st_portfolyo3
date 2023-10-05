@@ -25,7 +25,7 @@ else:
         today = now.date()
         today_str = now.strftime("%d-%m-%Y")
 
-tvdata = pd.read_parquet("data/parquet/tvdata23.parquet")
+tvdata = pd.read_parquet("data/parquet/data_daily.parquet")
 index = tvdata.query("ticker == 'XU100'").reset_index(drop=True)
 del tvdata
 index["change"] = (index["close"] / index["open"] - 1) * 100

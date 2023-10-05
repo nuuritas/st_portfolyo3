@@ -24,7 +24,7 @@ else:
         today = now.date()
         today_str = now.strftime("%d-%m-%Y")
         
-tvdata = pd.read_parquet("data/parquet/tvdata23.parquet")
+tvdata = pd.read_parquet("data/parquet/data_daily.parquet")
 
 st.title("Hisse Analizi")
 st.header("Tek Hisse ile Alış-Satış & Kar ve Maliyet Analizi")

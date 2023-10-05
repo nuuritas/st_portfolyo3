@@ -18,7 +18,7 @@ else:
 
 port_all = pd.read_parquet("data/parquet/port_all.parquet")
 port_all_today = port_all.query("date == @today")
-tvdata = pd.read_parquet("data/parquet/tvdata23.parquet")
+tvdata = pd.read_parquet("data/parquet/data_daily.parquet")
 
 wch_colour_font = (255, 255, 255)
 fontsize = 24
