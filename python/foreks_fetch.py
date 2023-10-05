@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import warnings; warnings.simplefilter('ignore')
 import numpy as np
@@ -5,6 +6,7 @@ import json
 import requests
 import concurrent.futures
 import time
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def convert_sector_wide(data, sector_name):
     rename_dict = {
