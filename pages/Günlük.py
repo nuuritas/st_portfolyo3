@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 from streamlit_echarts import st_echarts
+from datetime import datetime, timedelta
 
 st.set_page_config(layout="wide")
 
@@ -10,7 +11,7 @@ haftalık_ozet = pd.read_parquet("data/parquet/haftalık_ozet.parquet")
 port_all = pd.read_parquet("data/parquet/port_all.parquet")
 hisse_gunluk = pd.read_parquet("data/parquet/hisse_gunluk.parquet")
 
-from datetime import datetime, timedelta
+
 
 now = datetime.now()
 if now.weekday() >= 5:  # 5: Saturday, 6: Sunday

@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 from streamlit_echarts import st_echarts
+import warnings; warnings.simplefilter('ignore')
 
 st.set_page_config(layout="wide")
 
