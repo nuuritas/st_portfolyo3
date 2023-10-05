@@ -265,10 +265,8 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
             all_data_daily = pd.concat(
                 [all_data_daily, data], axis=0, ignore_index=True
             )
-all_data_daily["date"] = (
-    pd.to_datetime(all_data_daily["d"], unit="ms")
-    .dt.tz_localize("UTC")
-    .dt.tz_convert("Europe/Istanbul")
+all_data_daily["date"] = pd.to_datetime(all_data_daily["d"], unit="ms") + pd.Timedelta(
+    hours=3
 )
 print(
     f"Time taken for daily: {time.time() - start:.2f} seconds. Number of ticker: {len(all_tickers)}, fetched tickers: {len(all_data_daily.ticker.unique())}"
@@ -285,11 +283,9 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
                 [all_data_hourly, data], axis=0, ignore_index=True
             )
 
-all_data_hourly["date"] = (
-    pd.to_datetime(all_data_hourly["d"], unit="ms")
-    .dt.tz_localize("UTC")
-    .dt.tz_convert("Europe/Istanbul")
-)
+all_data_hourly["date"] = pd.to_datetime(
+    all_data_hourly["d"], unit="ms"
+) + pd.Timedelta(hours=3)
 print(
     f"Time taken for hourly {time.time() - start:.2f} seconds. Number of ticker: {len(all_tickers)}, fetched tickers: {len(all_data_hourly.ticker.unique())}"
 )

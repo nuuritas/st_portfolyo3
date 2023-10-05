@@ -123,7 +123,7 @@ def port_func2(ticker,df3):
                 "d_r_p": 0,
             })
         
-        df4 = df4.merge(tvdata.query("ticker == @ticker")[["date","open","close"]], on=["date"],how="left")
+        df4 = df4.merge(price_data.query("ticker == @ticker")[["date","open","close"]], on=["date"],how="left")
         f_fill_col = ["h_q", "a_a_b","a_a_s", "a_p_b", "a_r_p","close","open"] 
         #min, max, vol_ö
         df4[f_fill_col] = df4[f_fill_col].ffill()
@@ -165,7 +165,7 @@ def create_gunluk_ozet(port_all):
         "a_r_p": 'sum',
         "a_ur_p": 'sum',
     }).reset_index()
-    gunluk_ozet = gunluk_ozet[gunluk_ozet["date"].isin(tvdata["date"].unique())]
+    gunluk_ozet = gunluk_ozet[gunluk_ozet["date"].isin(price_data["date"].unique())]
     gunluk_ozet["d_a_c"] = - gunluk_ozet["d_a_b"] + gunluk_ozet["d_a_s"]
     gunluk_ozet["d_a_c"] = gunluk_ozet["d_a_c"].round(2)
     gunluk_ozet["t_v"] = gunluk_ozet["t_v"].round(2)
@@ -223,7 +223,7 @@ def create_haftalık_ozet(port_all):
         "a_ur_p": 'sum',
     }).reset_index()
 
-    haftalık_ozet = haftalık_ozet[haftalık_ozet["date"].isin(tvdata["date"].unique())]
+    haftalık_ozet = haftalık_ozet[haftalık_ozet["date"].isin(price_data["date"].unique())]
     haftalık_ozet["d_a_c"] = - haftalık_ozet["d_a_b"] + haftalık_ozet["d_a_s"]
     haftalık_ozet["d_a_c"] = haftalık_ozet["d_a_c"].round(2)
     haftalık_ozet["t_v"] = haftalık_ozet["t_v"].round(2)
@@ -255,7 +255,7 @@ def create_haftalık_ozet(port_all):
 
 df = pd.read_parquet("../data/midas_raw/midas_df.parquet")
 cum_inv_df = pd.read_parquet("../data/midas_raw/midas_cum_inv_df.parquet")
-tvdata = pd.read_parquet("../data/parquet/tvdata23.parquet")
+price_data = pd.read_parquet("../data/parquet/data_daily.parquet")
 
 port_all = pd.DataFrame()
 for ticker in df.ticker.unique():
