@@ -1,4 +1,4 @@
-name: Foreks Data Fetch
+name: Main Updater
 
 on:
   schedule:
