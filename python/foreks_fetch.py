@@ -9,7 +9,6 @@ import requests
 import concurrent.futures
 import time
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 
 def convert_sector_wide(data, sector_name):
