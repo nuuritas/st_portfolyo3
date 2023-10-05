@@ -10,7 +10,6 @@ import concurrent.futures
 import time
 
 
-
 def convert_sector_wide(data, sector_name):
     rename_dict = {
         "Sektör Ortalamaları": "Metrics",
@@ -301,5 +300,5 @@ all_data_daily.drop(columns=["d", "v", "a", "w", "v"], inplace=True)
 all_data_daily.columns = ["open", "high", "low", "close", "ticker", "date"]
 all_data_hourly.columns = ["open", "high", "low", "close", "ticker", "date"]
 
-all_data_daily.to_parquet("../data/parquet/data_daily.parquet")
-all_data_hourly.to_parquet("../data/parquet/data_hourly.parquet")
+all_data_daily.to_parquet("data/parquet/data_daily.parquet")
+all_data_hourly.to_parquet("data/parquet/data_hourly.parquet")
