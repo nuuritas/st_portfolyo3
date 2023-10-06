@@ -11,12 +11,34 @@ from midas_exporter import midas_exporter
 
 os.chdir(os.path.dirname(__file__))
 
-portfoy_df_7, investment_df_7, hesap_df_7 = midas_exporter("../data/midas_pdf/midas_7.pdf")
-portfoy_df_8, investment_df_8, hesap_df_8 = midas_exporter("../data/midas_pdf/midas_8.pdf")
-portfoy_df_9, investment_df_9, hesap_df_9 = midas_exporter("../data/midas_pdf/midas_9.pdf")
-investment_df = pd.concat([investment_df_7, investment_df_8, investment_df_9], axis=0, ignore_index=True)
+dir_path = "../data/midas_pdf"
 
-hesap_df = pd.concat([hesap_df_7, hesap_df_8,hesap_df_9], axis=0, ignore_index=True)
+files = os.listdir(dir_path)
+files = [f for f in files if 'midas_' in f and f.endswith('.pdf')]
+
+# Lists to store dataframes
+portfoy_dfs = []
+investment_dfs = []
+hesap_dfs = []
+
+for file in sorted(files):
+    file_path = os.path.join(dir_path, file)
+    
+    portfoy_df_temp, investment_df_temp, hesap_df_temp = midas_exporter(file_path)
+    
+    portfoy_dfs.append(portfoy_df_temp)
+    investment_dfs.append(investment_df_temp)
+    hesap_dfs.append(hesap_df_temp)
+
+investment_df = pd.concat(investment_dfs, axis=0, ignore_index=True)
+
+# portfoy_df_7, investment_df_7, hesap_df_7 = midas_exporter("../data/midas_pdf/midas_7.pdf")
+# portfoy_df_8, investment_df_8, hesap_df_8 = midas_exporter("../data/midas_pdf/midas_8.pdf")
+# portfoy_df_9, investment_df_9, hesap_df_9 = midas_exporter("../data/midas_pdf/midas_9.pdf")
+# investment_df = pd.concat([investment_df_7, investment_df_8, investment_df_9], axis=0, ignore_index=True)
+
+# hesap_df = pd.concat([hesap_df_7, hesap_df_8,hesap_df_9], axis=0, ignore_index=True)
+hesap_df = pd.concat(hesap_dfs, axis=0, ignore_index=True)
 hesap_df["date"] = hesap_df["İşlem Tarihi"].apply(lambda x: dt.strptime(x, "%d/%m/%y %H:%M:%S"))
 hesap_df["date"] = hesap_df["date"].apply(lambda x: x.normalize())
 hesap_df["adj_amount"] = np.where(hesap_df["İşlem Tipi"] == "Para Çekme", -hesap_df["Tutar (YP)"], hesap_df["Tutar (YP)"])
