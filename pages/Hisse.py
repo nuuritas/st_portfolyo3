@@ -2,8 +2,9 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 from streamlit_echarts import st_echarts
-import warnings; warnings.simplefilter('ignore')
+import warnings
 
+warnings.simplefilter("ignore")
 
 
 st.set_page_config(layout="wide")
@@ -14,6 +15,7 @@ port_all = pd.read_parquet("data/parquet/port_all.parquet")
 hisse_gunluk = pd.read_parquet("data/parquet/hisse_gunluk.parquet")
 
 from datetime import datetime, timedelta
+
 now = datetime.now()
 if now.weekday() >= 5:  # 5: Saturday, 6: Sunday
     days_to_subtract = now.weekday() - 4
@@ -26,7 +28,7 @@ else:
     else:
         today = now.date()
         today_str = now.strftime("%d-%m-%Y")
-        
+
 tvdata = pd.read_parquet("data/parquet/data_daily.parquet")
 
 st.title("Hisse Analizi")
@@ -50,12 +52,12 @@ last_col = tablo2.iloc[-1]
 
 def generate_metric_html(label, value, delta):
     # Determine color for delta value
-    color, arrow, arrow2 = ("#4BD25B", "↑", "+") if delta >= 0 else ("#CF3A4B", "↓", "")
+    color, arrow, arrow2 = ("#4BD25B", "↑", "") if delta >= 0 else ("#CF3A4B", "↓", "")
     # Create the HTML structure
     html = f"""
     <div class="metric">
         <div class="label">{label}</div>
-        <div class="value" style="color: {color};">{arrow2} {value}</div>
+        <div class="value" style="color: {color};">{arrow2} {round(value)}</div>
         <div class="delta" style="color: {color};">{arrow} {delta}₺</div>
     </div>
     """
@@ -108,7 +110,7 @@ def generate_metrics_html(metrics):
 
 
 metrics = [
-    ("Güncel Fiyat", round(last_col["close"], 2), round(last_col["d_%"], 2)),
+    ("Fiyat", round(last_col["close"], 2), round(last_col["d_%"], 2)),
     ("Maliyet", int(last_col["a_p_b"]), 0),
     ("Adet", int(last_col["h_q"]), int(last_col["d_q_c"])),
     ("K/Z", round(last_col["a_p"], 3), round(last_col["a_%"], 2)),
@@ -143,24 +145,32 @@ scatter_data_sell = [
 ]
 
 option = {
-    "xAxis": {"type": "category", "data": dates_hisse,
-              "axisLine": {"lineStyle": {"color": "#ffffff"}}},
-    "yAxis": {"type": "value", "scale": True, "splitLine": {"show": False},
-              "axisLabel": {"formatter": "{value} ₺"},
-              "axisPointer": {"label": {"formatter": "{value} ₺"}},
-              "axisLine": {"lineStyle": {"color": "#ffffff"}}},
-
+    "xAxis": {
+        "type": "category",
+        "data": dates_hisse,
+        "axisLine": {"lineStyle": {"color": "#ffffff"}},
+    },
+    "yAxis": {
+        "type": "value",
+        "scale": True,
+        "splitLine": {"show": False},
+        "axisLabel": {"formatter": "{value} ₺"},
+        "axisPointer": {"label": {"formatter": "{value} ₺"}},
+        "axisLine": {"lineStyle": {"color": "#ffffff"}},
+    },
     "tooltip": {
         "trigger": "axis",
-        "axisPointer": {"type": "cross", "label": {"backgroundColor": "#6a7985"}},
+        "axisPointer": {"type": "shadow", "label": {"backgroundColor": "#6a7985"}},
     },
     "series": [
         {
             "data": close_values,
             "name": "Fiyat",
             "type": "line",
-            "smooth": True,
+            "smooth": False,
             "tooltip": {"formatter": "Date: {b} <br> Close: {c}"},
+            "color": "#11a4d6",
+            "showSymbol": False,
         },
         {
             "name": "Alış",
@@ -176,7 +186,7 @@ option = {
                 "color": "#ffffff",
             },
             "symbol": "pin",
-            "itemStyle": {"color": "#CEFF85"},
+            "itemStyle": {"color": "#4BD25B"},
         },
         {
             "name": "Satış",
@@ -192,8 +202,7 @@ option = {
                 "color": "white",
             },
             "symbol": "pin",
-            "itemStyle": {"color": "red"},
-
+            "itemStyle": {"color": "#CF3A4B"},
         },
     ],
 }

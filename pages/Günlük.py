@@ -87,10 +87,10 @@ options_bar_gunluk = {
             "data": index_values,
             "name": "XU100(%)",
             "type": "line",
-            "smooth": False,
+            "smooth": True,
             "color": "white",
             "itemStyle": {"color": "white"},
-            "lineStyle": {"color": "white", "type": "solid", "width": 2},
+            "lineStyle": {"color": "white", "type": "solid", "width": 1, "opacity": 0.8},
             "order": "before",
             "showSymbol": False
         },

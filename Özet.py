@@ -28,17 +28,17 @@ def main_holdings_html(
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <div style='background-color: transparent; color: white; border-radius: 7px; padding: 12px; line-height: 25px; border: 1px solid white; margin-bottom: 12px;font-family: "Lilita One", cursive;'>
         <span style='font-size: 22px; display: block;'>BAKIYE</span>
-        <span style='font-size: 28px; display: block;'>TL{total_value}</span>
+        <span style='font-size: 28px; display: block;'>{total_value} TL</span>
         <br>
         <div style='display: flex; justify-content: space-between;'>
-            <span style='font-size: 16px; display: block;'>Günlük KZ:</span>
-            <span style='font-size: 18px; color: {days_gain_color}; display: block;'>TL{days_gain}(%{days_gain_perc})</span>
+            <span style='font-size: 18px; display: block;'>GÜNLÜK KZ:</span>
+            <span style='font-size: 20px; color: {days_gain_color}; display: block;'>{days_gain} TL(%{days_gain_perc})</span>
         </div>
         <div style='display: flex; justify-content: space-between;'>
-            <span style='font-size: 16px; display: block;'>Toplam KZ:</span>
-            <span style='font-size: 16px; color: {total_gain_color}; display: block;'>TL{total_gain}(%{total_gain_perc})</span>
+            <span style='font-size: 18px; display: block;'>TOPLAM KZ:</span>
+            <span style='font-size: 20px; color: {total_gain_color}; display: block;'>{total_gain} TL(%{total_gain_perc})</span>
         </div>
-        <span style='font-size: 12px; display: block; color:yellowq'>Güncelleme: {current_date}</span>
+        <span style='font-size: 14px; display: block; color:yellowq'>Güncelleme: {current_date}</span>
     </div>
     """
 
@@ -126,6 +126,7 @@ options_pie_main = {
             "label": {
                 "color": "#ffffff",
                 "fontSize": 14,
+                "fontWeight": "bold",
             },
             "emphasis": {
                 "label": {
@@ -133,6 +134,7 @@ options_pie_main = {
                     "fontWeight": "bold",
                     "fontSize": 16,
                     "fontColor": "#ffffff",
+                    
                 },
                 "itemStyle": {
                     "shadowBlur": 10,
@@ -150,7 +152,7 @@ options_pie_main["series"][0]["data"] = data_list
 
 st_echarts(
     options=options_pie_main,
-    height="500px",
+    height="300px",
 )
 
 
@@ -159,14 +161,14 @@ import streamlit as st
 
 def generate_metric_html(label, value, delta):
     # Determine color for delta value
-    color, arrow, arrow2 = ("green", "↑", "+") if delta >= 0 else ("red", "↓", "")
+    color, arrow, arrow2 = ("green", "↑", "") if delta >= 0 else ("red", "↓", "")
 
     # Create the HTML structure
     html = f"""
     <div class="metric">
         <div class="label">{label}</div>
         <div class="value" style="color: {color};">{arrow2} {value}</div>
-        <div class="delta" style="color: {color};">{arrow} {delta}₺</div>
+        <div class="delta" style="color: {color};">{arrow} {delta} TL</div>
     </div>
     """
     return html
