@@ -122,7 +122,6 @@ a_inv_values = gunluk_ozet["a_inv"].tolist()
 
 # st.dataframe(gunluk_ozet)
 options_portfoy_gunluk = {
-    "title": {"text": "Portföy ve Yatırım", "textStyle": {"color": "#ffffff"}},
     "tooltip": {
         "trigger": "axis",
         "axisPointer": {"type": "cross", "label": {"backgroundColor": "#6a7985"}},
@@ -145,16 +144,34 @@ options_portfoy_gunluk = {
         {
             "name": "Portfolyo",
             "type": "line",
-            "areaStyle": {},
+            "areaStyle": {
+                "color": {
+                    "type": "linear",
+                    "x": 0,
+                    "y": 0,
+                    "x2": 0,
+                    "y2": 1,
+                    "colorStops": [
+                        {"offset": 0, "color": "#D4F2D2"},
+                        {"offset": 1, "color": "#D4F2D2"},
+                    ],
+                    "global": False,
+                }   
+            },
+            "color": "#D4F2D2",
             "emphasis": {"focus": "series"},
             "data": t_v_values,
+            "showSymbol": True,
+            "symbol": "circle",
         },
         {
             "name": "Yatırım",
             "type": "line",
-            "areaStyle": {},
             "emphasis": {"focus": "series"},
+            "color": "#CF3A4B",
             "data": a_inv_values,
+            "symbol": "circle",
+            "showSymbol": True,
         },
     ],
 }

@@ -36,6 +36,8 @@ st.markdown("""
     <div class="rubik-text">Hisseler</div>
 """, unsafe_allow_html=True)
 st.divider()
+
+
 def generate_sparkline(values, color="white"):
     """Generate an SVG sparkline from a list of values."""
     # Normalize values to fit within SVG viewBox
@@ -88,8 +90,6 @@ def stock_html(stock_code, ticker_price,sparkline_svg, holding_value, daily_gain
     """
 
 
-
-
 # Main Holdings Info Box
 def main_holdings_html(
     total_value,
@@ -122,9 +122,9 @@ def main_holdings_html(
 
 main_html = main_holdings_html("5000", "75", "2","-50", "-3", "green", "red")
 
-for index, row in port_all_today.sort_values("h_a",ascending=False).iterrows():
+for index, row in port_all_today.sort_values("t_v",ascending=False).iterrows():
     ticker = row['ticker']
-    holding_value = int(row['h_a'])
+    holding_value = int(row['t_v'])
     daily_gain = int(row['d_p'])
     daily_gain_perc = round(row['d_%'],2)
 

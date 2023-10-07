@@ -83,7 +83,6 @@ haftalık_t_v_values = haftalık_ozet["t_v"].tolist()
 haftalık_a_inv_values = haftalık_ozet["a_inv"].tolist()
 
 
-st.dataframe(haftalık_ozet)
 options_portfoy = {
     "title": {"text": "Portföy ve Yatırım", "textStyle": {"color": "#ffffff"}},
     "tooltip": {

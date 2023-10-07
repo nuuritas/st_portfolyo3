@@ -43,6 +43,65 @@ def main_holdings_html(
     """
 
 
+def generate_metric_html(label, value, delta):
+    # Determine color for delta value
+    color, arrow, arrow2 = ("#4BD25B", "↑", "") if delta >= 0 else ("red", "↓", "")
+
+    # Create the HTML structure
+    html = f"""
+    <div class="metric">
+        <div class="label">{label}</div>
+        <div class="value" style="color: {color};">{arrow2} {value}</div>
+        <div class="delta" style="color: {color};">{arrow} {delta} TL</div>
+    </div>
+    """
+    return html
+
+
+def generate_metrics_html(metrics):
+    html_header = """
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <style>
+        .metrics-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .metric {
+            flex: 1;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .label {
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Lilita One', cursive;
+        }
+        .value {
+            font-family: 'Lilita One', cursive;
+            font-size: 24px;
+        }
+        .delta {
+            font-size: 16px;
+            font-family: 'Lilita One', cursive;
+        }
+    </style>
+    <div class="metrics-container">
+    """
+
+    html_footer = """
+    </div>
+    """
+
+    metrics_html = [
+        generate_metric_html(label, value, delta) for label, value, delta in metrics
+    ]
+    final_html = html_header + "".join(metrics_html) + html_footer
+
+    return final_html
+
 now = datetime.now()
 if now.weekday() >= 5:  # 5: Saturday, 6: Sunday
     days_to_subtract = now.weekday() - 4
@@ -156,67 +215,6 @@ st_echarts(
 )
 
 
-import streamlit as st
-
-
-def generate_metric_html(label, value, delta):
-    # Determine color for delta value
-    color, arrow, arrow2 = ("green", "↑", "") if delta >= 0 else ("red", "↓", "")
-
-    # Create the HTML structure
-    html = f"""
-    <div class="metric">
-        <div class="label">{label}</div>
-        <div class="value" style="color: {color};">{arrow2} {value}</div>
-        <div class="delta" style="color: {color};">{arrow} {delta} TL</div>
-    </div>
-    """
-    return html
-
-
-def generate_metrics_html(metrics):
-    html_header = """
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
-    <style>
-        .metrics-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .metric {
-            flex: 1;
-            text-align: center;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .label {
-            font-size: 16px;
-            font-weight: bold;
-            font-family: 'Lilita One', cursive;
-        }
-        .value {
-            font-family: 'Lilita One', cursive;
-            font-size: 24px;
-        }
-        .delta {
-            font-size: 16px;
-            font-family: 'Lilita One', cursive;
-        }
-    </style>
-    <div class="metrics-container">
-    """
-
-    html_footer = """
-    </div>
-    """
-
-    metrics_html = [
-        generate_metric_html(label, value, delta) for label, value, delta in metrics
-    ]
-    final_html = html_header + "".join(metrics_html) + html_footer
-
-    return final_html
 
 
 metrics = [
