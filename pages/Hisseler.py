@@ -1,49 +1,4 @@
 import streamlit as st
-
-html_code = """
-    <script>
-        function setWindowSize() {
-            const width = window.innerWidth || document.body.clientWidth;
-            const height = window.innerHeight || document.body.clientHeight;
-            document.querySelector("#width").textContent = width;
-            document.querySelector("#height").textContent = height;
-        }
-        window.onload = setWindowSize;
-        window.onresize = setWindowSize;
-    </script>
-    <span id="width" style="display:none;"></span>
-    <span id="height" style="display:none;"></span>
-"""
-
-st.markdown(html_code, unsafe_allow_html=True)
-
-import streamlit as st
-
-# This assumes you've already added the above HTML snippet to your app
-width = st.empty()
-height = st.empty()
-
-# Check if the browser size information is available in the session state
-if hasattr(st.session_state, "browser_width"):
-    browser_width = st.session_state.browser_width
-    browser_height = st.session_state.browser_height
-else:
-    # Default values (could be any reasonable default for your app)
-    browser_width = 800
-    browser_height = 600
-
-# Set the font size based on browser width
-if browser_width <= 480:  # Example breakpoint for mobile screens
-    font_size = 16
-else:
-    font_size = 20
-
-# Display text with the adjusted font size
-st.markdown(f"<p style='font-size: {font_size}px;'>This is your text!</p>", unsafe_allow_html=True)
-st.write("Browser width:", browser_width, "px. Font size:", font_size, "px.")
-
-
-import streamlit as st
 from datetime import datetime, timedelta
 import pandas as pd
 # st.set_page_config(layout="centered")
@@ -132,6 +87,9 @@ def stock_html(stock_code, ticker_price,sparkline_svg, holding_value, daily_gain
         </div>
     </div>
     """
+
+
+
 
 # Main Holdings Info Box
 def main_holdings_html(
