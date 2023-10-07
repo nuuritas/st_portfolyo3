@@ -58,7 +58,7 @@ def generate_metric_html(label, value, delta):
     html = f"""
     <div class="metric">
         <div class="label">{label}</div>
-        <div class="value" style="color: {color};">{arrow2} {round(value)}</div>
+        <div class="value" style="color: {color};">{arrow2} {value}</div>
         <div class="delta" style="color: {color};">{arrow} {delta}₺</div>
     </div>
     """
