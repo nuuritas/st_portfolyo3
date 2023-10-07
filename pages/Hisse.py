@@ -4,10 +4,9 @@ from datetime import datetime, timedelta
 from streamlit_echarts import st_echarts
 import warnings; warnings.simplefilter('ignore')
 
-# with open("style.css") as css:
-#     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
 
-# st.set_page_config(layout="wide")
+
+st.set_page_config(layout="wide")
 
 gunluk_ozet = pd.read_parquet("data/parquet/gunluk_ozet.parquet")
 haftalık_ozet = pd.read_parquet("data/parquet/haftalık_ozet.parquet")
@@ -51,7 +50,7 @@ last_col = tablo2.iloc[-1]
 
 def generate_metric_html(label, value, delta):
     # Determine color for delta value
-    color, arrow, arrow2 = ("#4BD25B", "↑", "+") if delta >= 0 else ("#CF3A4B", "↓", "-")
+    color, arrow, arrow2 = ("#4BD25B", "↑", "+") if delta >= 0 else ("#CF3A4B", "↓", "")
     # Create the HTML structure
     html = f"""
     <div class="metric">
@@ -65,6 +64,7 @@ def generate_metric_html(label, value, delta):
 
 def generate_metrics_html(metrics):
     html_header = """
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <style>
         .metrics-container {
             display: flex;
@@ -81,12 +81,15 @@ def generate_metrics_html(metrics):
         .label {
             font-size: 14px;
             font-weight: bold;
+            font-family: 'Lilita One', cursive;
         }
         .value {
             font-size: 24px;
+            font-family: 'Lilita One', cursive;
         }
         .delta {
             font-size: 16px;
+            font-family: 'Lilita One', cursive;
         }
     </style>
     <div class="metrics-container">

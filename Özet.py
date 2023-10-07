@@ -28,15 +28,15 @@ def main_holdings_html(
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <div style='background-color: transparent; color: white; border-radius: 7px; padding: 12px; line-height: 25px; border: 1px solid white; margin-bottom: 12px;font-family: "Lilita One", cursive;'>
         <span style='font-size: 22px; display: block;'>BAKIYE</span>
-        <span style='font-size: 28px; display: block;'>₺{total_value}</span>
+        <span style='font-size: 28px; display: block;'>TL{total_value}</span>
         <br>
         <div style='display: flex; justify-content: space-between;'>
             <span style='font-size: 16px; display: block;'>Günlük KZ:</span>
-            <span style='font-size: 18px; color: {days_gain_color}; display: block;'>₺{days_gain}(%{days_gain_perc})</span>
+            <span style='font-size: 18px; color: {days_gain_color}; display: block;'>TL{days_gain}(%{days_gain_perc})</span>
         </div>
         <div style='display: flex; justify-content: space-between;'>
             <span style='font-size: 16px; display: block;'>Toplam KZ:</span>
-            <span style='font-size: 16px; color: {total_gain_color}; display: block;'>₺{total_gain}(%{total_gain_perc})</span>
+            <span style='font-size: 16px; color: {total_gain_color}; display: block;'>TL{total_gain}(%{total_gain_perc})</span>
         </div>
         <span style='font-size: 12px; display: block; color:yellowq'>Güncelleme: {current_date}</span>
     </div>
@@ -63,7 +63,10 @@ hisse_gunluk = pd.read_parquet("data/parquet/hisse_gunluk.parquet")
 
 
 toplam_buyukluk = port_all.query("date == @today").t_v.sum()
-toplam_net = round(gunluk_ozet.query("date == @today")["a_ur_p"].values[0] + gunluk_ozet.query("date == @today")["a_r_p"].values[0])
+toplam_net = round(
+    gunluk_ozet.query("date == @today")["a_ur_p"].values[0]
+    + gunluk_ozet.query("date == @today")["a_r_p"].values[0]
+)
 toplam_yuzde = round(toplam_net / toplam_buyukluk * 100, 1)
 gunluk_net = gunluk_ozet.query("date == @today").d_p.values[0]
 gunluk_yuzde = gunluk_ozet.query("date == @today").d_p_y.values[0]
@@ -100,13 +103,12 @@ data_list = [
 main_html = main_holdings_html(
     total_value=int(toplam_buyukluk),
     days_gain=int(gunluk_net),
-    days_gain_perc=round(gunluk_yuzde,1),
+    days_gain_perc=round(gunluk_yuzde, 1),
     total_gain=toplam_net,
     total_gain_perc=toplam_yuzde,
     days_gain_color="#4BD25B" if gunluk_net >= 0 else "#CF3A4B",
     total_gain_color="#4BD25B" if toplam_net >= 0 else "#CF3A4B",
 )
-
 
 
 st.markdown(lnk + main_html, unsafe_allow_html=True)
@@ -152,14 +154,12 @@ st_echarts(
 )
 
 
-
-
 import streamlit as st
 
 
 def generate_metric_html(label, value, delta):
     # Determine color for delta value
-    color, arrow, arrow2 = ("green", "↑", "+") if delta >= 0 else ("red", "↓", "-")
+    color, arrow, arrow2 = ("green", "↑", "+") if delta >= 0 else ("red", "↓", "")
 
     # Create the HTML structure
     html = f"""
@@ -174,6 +174,7 @@ def generate_metric_html(label, value, delta):
 
 def generate_metrics_html(metrics):
     html_header = """
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <style>
         .metrics-container {
             display: flex;
@@ -188,14 +189,17 @@ def generate_metrics_html(metrics):
             border-radius: 5px;
         }
         .label {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
+            font-family: 'Lilita One', cursive;
         }
         .value {
+            font-family: 'Lilita One', cursive;
             font-size: 24px;
         }
         .delta {
             font-size: 16px;
+            font-family: 'Lilita One', cursive;
         }
     </style>
     <div class="metrics-container">

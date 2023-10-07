@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Lolita+One&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap'); 
 
 html, body, [class*="css"] {
-    font-family: 'Lolita One', sans-serif; 
-    font-size: 20px;
+    font-family: 'Lilita One', cursive; 
+    font-size: 14;
     font-weight: 500;
     color: #091747;
 }
