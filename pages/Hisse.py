@@ -4,7 +4,10 @@ from datetime import datetime, timedelta
 from streamlit_echarts import st_echarts
 import warnings; warnings.simplefilter('ignore')
 
-st.set_page_config(layout="wide")
+# with open("style.css") as css:
+#     st.markdown( f'<style>{css.read()}</style>' , unsafe_allow_html= True)
+
+# st.set_page_config(layout="wide")
 
 gunluk_ozet = pd.read_parquet("data/parquet/gunluk_ozet.parquet")
 haftalık_ozet = pd.read_parquet("data/parquet/haftalık_ozet.parquet")
@@ -42,31 +45,73 @@ tablo.sort_values(by="date", ascending=True, inplace=True)
 tablo["date"] = tablo["date"].dt.strftime("%Y-%m-%d")
 tablo.set_index("date", inplace=True)
 
-m1, m2, m3, m4 = st.columns((1, 1, 1, 1))
+
 last_col = tablo2.iloc[-1]
 
-m1.metric(
-    label="Güncel Fiyat",
-    value=round(last_col["close"], 2),
-    delta="%" + str(round(last_col["d_%"], 2)),
-    delta_color="normal",
-)
-m2.metric(
-    label="Maliyet (₺)",
-    value=int(last_col["a_p_b"]),
-)
-m3.metric(
-    label="Adet",
-    value=int(last_col["h_q"]),
-    delta=int(last_col["d_q_c"]),
-    delta_color="normal",
-)
-m4.metric(
-    label="K/Z",
-    value=round(last_col["a_p"], 3),
-    delta=str(round(last_col["a_%"], 2)) + "%",
-    delta_color="normal",
-)
+
+def generate_metric_html(label, value, delta):
+    # Determine color for delta value
+    color, arrow, arrow2 = ("#4BD25B", "↑", "+") if delta >= 0 else ("#CF3A4B", "↓", "-")
+    # Create the HTML structure
+    html = f"""
+    <div class="metric">
+        <div class="label">{label}</div>
+        <div class="value" style="color: {color};">{arrow2} {value}</div>
+        <div class="delta" style="color: {color};">{arrow} {delta}₺</div>
+    </div>
+    """
+    return html
+
+
+def generate_metrics_html(metrics):
+    html_header = """
+    <style>
+        .metrics-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .metric {
+            flex: 1;
+            text-align: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .value {
+            font-size: 24px;
+        }
+        .delta {
+            font-size: 16px;
+        }
+    </style>
+    <div class="metrics-container">
+    """
+
+    html_footer = """
+    </div>
+    """
+
+    metrics_html = [
+        generate_metric_html(label, value, delta) for label, value, delta in metrics
+    ]
+    final_html = html_header + "".join(metrics_html) + html_footer
+
+    return final_html
+
+
+metrics = [
+    ("Güncel Fiyat", round(last_col["close"], 2), round(last_col["d_%"], 2)),
+    ("Maliyet", int(last_col["a_p_b"]), 0),
+    ("Adet", int(last_col["h_q"]), int(last_col["d_q_c"])),
+    ("K/Z", round(last_col["a_p"], 3), round(last_col["a_%"], 2)),
+]
+
+st.markdown(generate_metrics_html(metrics), unsafe_allow_html=True)
 
 # Extracting and formatting dates
 dates_hisse = tek_hisse["date"].dt.strftime("%Y-%m-%d").tolist()

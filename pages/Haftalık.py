@@ -39,17 +39,17 @@ haftalık_formatted_values = []
 for val in haftalık_dpy_values:
     if val >= 0:
         haftalık_formatted_values.append(
-            {"value": val, "itemStyle": {"color": "#00a900"}}
+            {"value": val, "itemStyle": {"color": "#4BD25B"}}
         )  # green for positive
     else:
         haftalık_formatted_values.append(
-            {"value": val, "itemStyle": {"color": "#a90000"}}
+            {"value": val, "itemStyle": {"color": "#CF3A4B"}}
         )  # red for negative
 
 # Updating options
 options_bar_haftalık = {
     "tooltip": {
-        "trigger": "item",
+        "trigger": "axis",
         "axisPointer": {"type": "shadow"},
     },
     "title": {
@@ -82,6 +82,8 @@ st_echarts(
 haftalık_t_v_values = haftalık_ozet["t_v"].tolist()
 haftalık_a_inv_values = haftalık_ozet["a_inv"].tolist()
 
+
+st.dataframe(haftalık_ozet)
 options_portfoy = {
     "title": {"text": "Portföy ve Yatırım", "textStyle": {"color": "#ffffff"}},
     "tooltip": {

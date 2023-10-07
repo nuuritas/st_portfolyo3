@@ -74,16 +74,15 @@ def stock_html(stock_code, ticker_price,sparkline_svg, holding_value, daily_gain
     <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <div style='display: flex; justify-content: space-between; align-items: center;
                 background-color: transparent; font-family: "Lilita One", cursive;
-                color: rgb({wch_colour_font[0]}, {wch_colour_font[1]}, {wch_colour_font[2]}); 
-                border-radius: 20px; padding: 12px; line-height: 25px; border: 1px solid white;'>
+                border-radius: 10px; padding: 12px; line-height: 25px; border: 1px solid white;'>
         <div style='flex: 1; text-align: left;'> 
             <span style='font-size: {fontsize-2}px; '>{stock_code}</span>
-            <span style='font-size: 18px; display: block;'>{round(ticker_price,2)}₺</span>
+            <span style='font-size: 18px; display: block;'>TL{round(ticker_price,2)}</span>
         </div>
         <div style='flex: 1;'>{sparkline_svg}</div>
         <div style='flex: 1; text-align: right;'>
-            <span style='font-size: {fontsize-2}px; display: block;'>{holding_value}₺</span>
-            <span style='font-size: 14px; color: {gain_color}; display: block;'>₺{daily_gain}(%{daily_gain_perc})</span>
+            <span style='font-size: {fontsize-2}px; display: block;'>{holding_value} TL</span>
+            <span style='font-size: 14px; color: {gain_color}; display: block;'>{daily_gain}TL(%{daily_gain_perc})</span>
         </div>
     </div>
     """
@@ -123,14 +122,13 @@ def main_holdings_html(
 
 main_html = main_holdings_html("5000", "75", "2","-50", "-3", "green", "red")
 
-
-for index, row in port_all_today.iterrows():
+for index, row in port_all_today.sort_values("h_a",ascending=False).iterrows():
     ticker = row['ticker']
     holding_value = int(row['h_a'])
     daily_gain = int(row['d_p'])
     daily_gain_perc = round(row['d_%'],2)
 
-    gain_color = "green" if daily_gain >= 0 else "red"
+    gain_color = "#4BD25B" if daily_gain >= 0 else "#CF3A4B"
     
     # Fetching last 10 close values for the ticker from tvdata
     spark_values = tvdata.query("ticker == @ticker")['close'].tail(10).tolist()

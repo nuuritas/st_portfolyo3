@@ -48,11 +48,11 @@ formatted_values = []
 for val in values:
     if val >= 0:
         formatted_values.append(
-            {"value": val, "itemStyle": {"color": "#2DE1C2"}}
+            {"value": val, "itemStyle": {"color": "#4BD25B"}}
         )  # green for positive
     else:
         formatted_values.append(
-            {"value": val, "itemStyle": {"color": "red"}}
+            {"value": val, "itemStyle": {"color": "#CF3A4B"}}
         )  # red for negative
 
 # Updating options
@@ -60,11 +60,6 @@ options_bar_gunluk = {
     "tooltip": {
         "trigger": "axis",
         "axisPointer": {"type": "shadow"},
-    },
-    "title": {
-        "text": "Günlük Getiri",
-        "left": "center",
-        "textStyle": {"color": "#ffffff"},
     },
     "xAxis": {
         "type": "category",
@@ -81,7 +76,7 @@ options_bar_gunluk = {
         {
             "data": formatted_values,
             "name": "Günlük(%)",
-            "type": "line",
+            "type": "bar",
             "color": "#42c8b2",
             "smooth": False,
             "itemStyle": {"color": "#42c8b2"},
@@ -95,8 +90,9 @@ options_bar_gunluk = {
             "smooth": False,
             "color": "white",
             "itemStyle": {"color": "white"},
-            "lineStyle": {"color": "white", "type": "dashed", "width": 1},
+            "lineStyle": {"color": "white", "type": "solid", "width": 2},
             "order": "before",
+            "showSymbol": False
         },
     ],
     "dataZoom": [
@@ -106,6 +102,12 @@ options_bar_gunluk = {
             "end": 100,
         }
     ],
+    "legend": {
+        "data": ["Günlük(%)", "XU100(%)"],
+        "textStyle": {"color": "#ffffff"},
+        "top": "5%",
+        "left": "center",
+    },
 }
 
 
@@ -157,4 +159,4 @@ options_portfoy_gunluk = {
     ],
 }
 
-# st_echarts(options=options_portfoy_gunluk, height="400px")
+st_echarts(options=options_portfoy_gunluk, height="400px")

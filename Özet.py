@@ -103,9 +103,11 @@ main_html = main_holdings_html(
     days_gain_perc=round(gunluk_yuzde,1),
     total_gain=toplam_net,
     total_gain_perc=toplam_yuzde,
-    days_gain_color="green" if gunluk_net >= 0 else "red",
-    total_gain_color="green" if toplam_net >= 0 else "red",
+    days_gain_color="#4BD25B" if gunluk_net >= 0 else "#CF3A4B",
+    total_gain_color="#4BD25B" if toplam_net >= 0 else "#CF3A4B",
 )
+
+
 
 st.markdown(lnk + main_html, unsafe_allow_html=True)
 
@@ -213,8 +215,8 @@ def generate_metrics_html(metrics):
 
 metrics = [
     ("Günlük(%)", gunluk_yuzde, gunluk_net),
-    ("Haftalık(%)", haftalik_yuzde, haftalik_net),
-    ("Aylık(%)", aylik_yuzde, aylik_net),
+    ("Haftalık(%)", haftalik_yuzde, round(haftalik_net)),
+    ("Aylık(%)", aylik_yuzde, round(aylik_net)),
 ]
 
 st.markdown(generate_metrics_html(metrics), unsafe_allow_html=True)
