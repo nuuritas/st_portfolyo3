@@ -13,6 +13,7 @@ gunluk_ozet = pd.read_parquet("data/parquet/gunluk_ozet.parquet")
 haftalık_ozet = pd.read_parquet("data/parquet/haftalık_ozet.parquet")
 port_all = pd.read_parquet("data/parquet/port_all.parquet")
 hisse_gunluk = pd.read_parquet("data/parquet/hisse_gunluk.parquet")
+price_data = pd.read_parquet("data/parquet/data_daily.parquet")
 
 from datetime import datetime, timedelta
 
@@ -118,9 +119,11 @@ metrics = [
 
 st.markdown(generate_metrics_html(metrics), unsafe_allow_html=True)
 
+first_day = tek_hisse["date"].iloc[0]
+close_values = price_data.query("ticker == @ind_options & date >= @first_day")["close"].tolist()
 # Extracting and formatting dates
-dates_hisse = tek_hisse["date"].dt.strftime("%Y-%m-%d").tolist()
-close_values = tek_hisse["close"].tolist()
+dates_hisse = price_data.query("ticker == @ind_options & date >= @first_day")["date"].dt.strftime("%Y-%m-%d").tolist()
+# close_values = tek_hisse["close"].tolist()
 
 # Extracting buy/sell data
 buy_data = port_all.query("ticker == @ind_options & d_q_b > 0")
