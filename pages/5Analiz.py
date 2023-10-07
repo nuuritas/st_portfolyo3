@@ -114,7 +114,7 @@ metrics = [
     ("Fiyat", round(last_col["close"], 2), round(last_col["d_%"], 2)),
     ("Maliyet", int(last_col["a_p_b"]), 0),
     ("Adet", int(last_col["h_q"]), int(last_col["d_q_c"])),
-    ("K/Z", round(last_col["a_p"], 3), round(last_col["a_%"], 2)),
+    ("K/Z", round(last_col["a_p"]), round(last_col["a_%"], 2)),
 ]
 
 st.markdown(generate_metrics_html(metrics), unsafe_allow_html=True)
