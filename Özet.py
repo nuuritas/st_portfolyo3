@@ -25,9 +25,9 @@ def main_holdings_html(
 ):
     current_date = datetime.now().strftime("%d-%m-%Y")
     return f"""
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
-    <div style='background-color: transparent; color: white; border-radius: 7px; padding: 12px; line-height: 25px; border: 1px solid white; margin-bottom: 12px;font-family: "Rubik Mono One", cursive;'>
-        <span style='font-size: 22px; display: block;'>BAKİYE</span>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <div style='background-color: transparent; color: white; border-radius: 7px; padding: 12px; line-height: 25px; border: 1px solid white; margin-bottom: 12px;font-family: "Lilita One", cursive;'>
+        <span style='font-size: 22px; display: block;'>BAKIYE</span>
         <span style='font-size: 28px; display: block;'>₺{total_value}</span>
         <br>
         <div style='display: flex; justify-content: space-between;'>

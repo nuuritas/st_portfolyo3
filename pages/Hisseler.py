@@ -71,9 +71,9 @@ def generate_sparkline(values, color="white"):
 
 def stock_html(stock_code, ticker_price,sparkline_svg, holding_value, daily_gain, daily_gain_perc,gain_color):
     return f"""
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
     <div style='display: flex; justify-content: space-between; align-items: center;
-                background-color: transparent; font-family: "Rubik Mono One", cursive;
+                background-color: transparent; font-family: "Lilita One", cursive;
                 color: rgb({wch_colour_font[0]}, {wch_colour_font[1]}, {wch_colour_font[2]}); 
                 border-radius: 20px; padding: 12px; line-height: 25px; border: 1px solid white;'>
         <div style='flex: 1; text-align: left;'> 
@@ -103,8 +103,8 @@ def main_holdings_html(
 ):
     current_date = datetime.now().strftime("%B %d, %Y")
     return f"""
-    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
-    <div style='background-color: transparent; color: white; border-radius: 7px; padding: 12px; line-height: 25px; border: 1px solid white; margin-bottom: 12px;font-family: "Rubik Mono One", cursive;'>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <div style='background-color: transparent; color: white; border-radius: 7px; padding: 12px; line-height: 25px; border: 1px solid white; margin-bottom: 12px;font-family: "Lilita One", cursive;'>
         <span style='font-size: 22px; display: block;'>BAKİYE</span>
         <span style='font-size: 28px; display: block;'>₺{total_value}</span>
         <br>
