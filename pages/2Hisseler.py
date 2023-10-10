@@ -18,6 +18,8 @@ else:
 
 port_all = pd.read_parquet("data/parquet/port_all.parquet")
 port_all_today = port_all.query("date == @today")
+port_all_today.dropna(how="any", inplace=True)
+port_all_today.query("t_v > 0", inplace=True)
 tvdata = pd.read_parquet("data/parquet/data_daily.parquet")
 
 wch_colour_font = (255, 255, 255)

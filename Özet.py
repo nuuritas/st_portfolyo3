@@ -152,6 +152,7 @@ aylik_yuzde = round(
 
 son_gun = hisse_gunluk.query("date == @today").sort_values(by="t_v", ascending=True)
 son_gun.dropna(how="any", inplace=True)
+son_gun = son_gun[son_gun["h_q"] > 0]
 data_list = [
     {"name": ticker, "value": round(value)}
     for ticker, value in son_gun[["ticker", "t_v"]].values
@@ -218,7 +219,7 @@ st_echarts(
 
 
 metrics = [
-    ("Günlük(%)", gunluk_yuzde, gunluk_net),
+    ("Günlük(%)", gunluk_yuzde, round(gunluk_net)),
     ("Haftalık(%)", haftalik_yuzde, round(haftalik_net)),
     ("Aylık(%)", aylik_yuzde, round(aylik_net)),
 ]

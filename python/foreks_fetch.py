@@ -293,8 +293,13 @@ print(
 all_data_hourly.drop(columns=["d", "v", "a", "v"], inplace=True)
 all_data_daily.drop(columns=["d", "v", "a", "w", "v"], inplace=True)
 
+
 all_data_daily.columns = ["open", "high", "low", "close", "ticker", "date"]
 all_data_hourly.columns = ["open", "high", "low", "close", "ticker", "date"]
+
+all_data_daily["open"] = all_data_daily["close"].shift(1)
+mask = all_data_hourly['date'].dt.hour == 9
+all_data_hourly.loc[mask, 'open'] = all_data_hourly['close'].shift(1)[mask]
 
 all_data_daily.to_parquet("data/parquet/data_daily.parquet")
 all_data_hourly.to_parquet("data/parquet/data_hourly.parquet")
