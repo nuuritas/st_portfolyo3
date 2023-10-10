@@ -64,6 +64,11 @@ investment_df.rename(columns={
     "İşlem Tutarı": "trans_amount",
     'Ortalama İşlem Fiyatı': 'price'
 }, inplace=True)
+
+if os.path.exists("../data/excel/data.xlsx"):
+    excel_data = excel_transformer("../data/excel/data.xlsx")
+    investment_df = pd.concat([investment_df, excel_data], axis=0, ignore_index=True)   
+
 investment_df['date'] = pd.to_datetime(investment_df['date'])
 
 investment_df['date'] = investment_df['date'].apply(lambda x: x + pd.tseries.offsets.BusinessDay(1) if x.dayofweek > 5 else x)
@@ -79,9 +84,7 @@ for day in daily_range:
 cum_inv_df = pd.DataFrame({"date": daily_range, "cum_inv": cumulative_amount})
 cum_inv_df["date"] = cum_inv_df["date"].apply(lambda x: x.normalize())
 
-if os.path.exists("../data/excel/data.xlsx"):
-    excel_data = excel_transformer("../data/excel/data.xlsx")
-    investment_df = pd.concat([investment_df, excel_data], axis=0, ignore_index=True)
-    
+
+
 investment_df.to_parquet("../data/midas_raw/midas_df.parquet")
 cum_inv_df.to_parquet("../data/midas_raw/midas_cum_inv_df.parquet")
