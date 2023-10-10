@@ -3,7 +3,7 @@ name: Foreks Data Fetch
 on:
   schedule:
     - cron: '0 0 * * *' # Scheduled to run every day at midnight
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch:
 
 jobs:
   run-script:
