@@ -8,6 +8,7 @@ from datetime import datetime as dt
 import numpy as nps
 import os
 from midas_exporter import midas_exporter
+from excel_transformer import excel_transformer
 
 os.chdir(os.path.dirname(__file__))
 
@@ -78,5 +79,9 @@ for day in daily_range:
 cum_inv_df = pd.DataFrame({"date": daily_range, "cum_inv": cumulative_amount})
 cum_inv_df["date"] = cum_inv_df["date"].apply(lambda x: x.normalize())
 
+if os.path.exists("../data/excel/data.xlsx"):
+    excel_data = excel_transformer("../data/excel/data.xlsx")
+    investment_df = pd.concat([investment_df, excel_data], axis=0, ignore_index=True)
+    
 investment_df.to_parquet("../data/midas_raw/midas_df.parquet")
 cum_inv_df.to_parquet("../data/midas_raw/midas_cum_inv_df.parquet")

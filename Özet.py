@@ -116,8 +116,7 @@ else:
         today_str = now.strftime("%d-%m-%Y")
 
 hisse_gunluk = pd.read_parquet("data/parquet/hisse_gunluk.parquet")
-st.dataframe(gunluk_ozet)
-st.write(today)
+
 # st.dataframe(gunluk_ozet)
 # st.title(f"{datetime.today().strftime('%d-%m-%Y')} Özet")
 
