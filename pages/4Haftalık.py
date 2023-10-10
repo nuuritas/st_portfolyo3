@@ -26,8 +26,7 @@ else:
     
 tvdata = pd.read_parquet("data/parquet/data_daily.parquet")
 
-st.title("haftalık Bazda Sonuçlar")
-st.header("Burada haftalık kazanç ve portfolyo değişimi yer alır.")
+st.markdown("<h1 style='text-align: center; color: white;'>Haftalık Özet</h1>", unsafe_allow_html=True)
 
 # gunluk_ozet
 # Extracting data
@@ -51,11 +50,6 @@ options_bar_haftalık = {
     "tooltip": {
         "trigger": "axis",
         "axisPointer": {"type": "shadow"},
-    },
-    "title": {
-        "text": "Günlük Getiri",
-        "left": "center",
-        "textStyle": {"color": "#ffffff"},
     },
     "xAxis": {
         "type": "category",
@@ -122,4 +116,4 @@ options_portfoy = {
     ],
 }
 
-st_echarts(options=options_portfoy, height="400px")
+# st_echarts(options=options_portfoy, height="400px")

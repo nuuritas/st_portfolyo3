@@ -32,8 +32,9 @@ del tvdata
 index["change"] = (index["close"] / index["open"] - 1) * 100
 index["date"] = index["date"].apply(lambda x: x.normalize())
 
-st.title("Günlük Bazda Sonuçlar")
-# st.header("Burada günlük kazanç ve portfolyo değişimi yer alır.")
+# st.title("Günlük Özet")
+st.markdown("<h1 style='text-align: center; color: white;'>Günlük Özet</h1>", unsafe_allow_html=True)
+
 
 # gunluk_ozet
 # Extracting data
@@ -90,7 +91,7 @@ options_bar_gunluk = {
             "smooth": True,
             "color": "white",
             "itemStyle": {"color": "white"},
-            "lineStyle": {"color": "white", "type": "solid", "width": 1, "opacity": 0.8},
+            "lineStyle": {"color": "white", "type": "dashed", "width": 1, "opacity": 0.8},
             "order": "before",
             "showSymbol": False
         },
