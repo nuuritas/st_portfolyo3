@@ -2,7 +2,7 @@ name: Main Updater
 
 on:
   schedule:
-    - cron: '17 * * * *' # Scheduled to run every day at midnight
+    - cron: '0 * * * *' # Scheduled to run every day at midnight
 
 jobs:
   run-script:
