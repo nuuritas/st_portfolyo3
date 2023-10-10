@@ -7,7 +7,7 @@ def excel_transformer(filename):
                         "sembol":"ticker",
                         "tur":"buy_sell",
                         "fiyat":"price",
-                        "adet":"realized_q"}, inplace=True)
+                        "adet":"quantity"}, inplace=True)
     data["buy_sell"] = data["buy_sell"].str.replace("BUY", "Alış").str.replace("SELL", "Satış")
 
     return data
