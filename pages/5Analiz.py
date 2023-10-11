@@ -97,9 +97,15 @@ def generate_metrics_html(metrics):
 st.markdown("<h1 style='text-align: center; color: white;'>Hisse Analiz</h1>", unsafe_allow_html=True)
 all_ticker = hisse_gunluk["ticker"]
 tickers = sorted(set(all_ticker))
+today_tickers = sorted(hisse_gunluk.query("date == @today & h_q > 0")["ticker"].tolist())
+
 
 st.divider()
-ind_options = st.selectbox("İncelemek için Hisse Seç", tickers)
+today_option = st.checkbox("Güncel Hisseler", value=True)
+if today_option:
+    ind_options = st.selectbox("İncelemek için Hisse Seç", today_tickers)
+else:
+    ind_options = st.selectbox("İncelemek için Hisse Seç", tickers, index=0)
 tek_hisse = hisse_gunluk.query("ticker == @ind_options")
 
 tablo = port_all.query("(ticker == @ind_options) & (d_q_b > 0 | d_q_s > 0)")

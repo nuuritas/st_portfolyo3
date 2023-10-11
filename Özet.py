@@ -130,18 +130,22 @@ toplam_yuzde = round(toplam_net / toplam_buyukluk * 100, 1)
 gunluk_net = gunluk_ozet.query("date == @today").d_p.values[0]
 gunluk_yuzde = gunluk_ozet.query("date == @today").d_p_y.values[0]
 
-# st.dataframe(gunluk_ozet)
+gunluk_ozet["week"] = gunluk_ozet["date"].dt.isocalendar().week
+gunluk_ozet["month"] = gunluk_ozet["date"].dt.month
+thisweek = today.isocalendar().week
+lastweek = thisweek - 1
+thismonth = today.month
 
-son_hafta = gunluk_ozet[-7:]
+son_hafta = gunluk_ozet.query("week == @thisweek")
 son_hafta.reset_index(drop=True, inplace=True)
 haftalik_net = (
     son_hafta.iloc[-1]["t_v"] - son_hafta.iloc[0]["t_v"] - son_hafta["d_inv"].sum()
 )
 haftalik_yuzde = round(
-    (1 - (son_hafta.iloc[-7]["t_v"] / son_hafta.iloc[-1]["t_v"])) * 100, 2
+    (1 - (son_hafta.iloc[0]["t_v"] / son_hafta.iloc[-1]["t_v"])) * 100, 2
 )
 
-son_ay = gunluk_ozet[-30:]
+son_ay = gunluk_ozet.query("month == @thismonth")
 son_ay.reset_index(drop=True, inplace=True)
 aylik_net = son_ay.iloc[-1]["t_v"] - son_ay.iloc[0]["t_v"] - son_ay["d_inv"].sum()
 aylik_yuzde = round(
@@ -150,11 +154,12 @@ aylik_yuzde = round(
     2,
 )
 
-son_gun = hisse_gunluk.query("date == @today").sort_values(by="t_v", ascending=True)
+son_gun = hisse_gunluk.query("date == @today").sort_values(
+    by="t_v", ascending=True
+)
 son_gun.dropna(how="any", inplace=True)
-son_gun = son_gun[son_gun["h_q"] > 0]
 data_list = [
-    {"name": ticker, "value": round(value)}
+    {"name": ticker, "value": round(value, 1)}
     for ticker, value in son_gun[["ticker", "t_v"]].values
 ]
 
